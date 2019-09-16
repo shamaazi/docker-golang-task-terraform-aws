@@ -1,4 +1,4 @@
-FROM golang:1-alpine
+FROM golang:1.13-alpine
 
 RUN apk add --update \
         git \
@@ -6,12 +6,19 @@ RUN apk add --update \
         python3-dev \
         py3-pip \
         build-base \
-        terraform \
-    && pip3 install awscli \
-    && rm -rf /var/cache/apk/*
+        terraform 
 
-RUN go get github.com/go-task/task/cmd/task
+RUN pip3 install awscli
 
-RUN go get github.com/wata727/tflint
+RUN git clone --depth=1 https://github.com/go-task/task /tmp/task \
+    && cd /tmp/task/cmd/task \
+    && go install \
+    && rm -rf /tmp/task
+
+RUN git clone --depth=1 https://github.com/wata727/tflint /tmp/tflint \
+    && cd /tmp/tflint \
+    && go mod vendor \
+    && go install \
+    && rm -rf /tmp/tflint
 
 WORKDIR /root
