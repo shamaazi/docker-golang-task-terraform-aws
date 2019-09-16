@@ -12,4 +12,6 @@ RUN apk add --update \
 
 RUN go get github.com/go-task/task/cmd/task
 
+RUN go get github.com/wata727/tflint
+
 WORKDIR /root
