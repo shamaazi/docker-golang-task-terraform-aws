@@ -5,8 +5,12 @@ RUN apk add --update \
         python3 \
         python3-dev \
         py3-pip \
-        build-base \
-        terraform 
+        build-base
+
+RUN cd /bin \
+    && wget https://releases.hashicorp.com/terraform/0.12.8/terraform_0.12.8_linux_amd64.zip \
+    && unzip terraform_0.12.8_linux_amd64.zip \
+    && rm terraform_0.12.8_linux_amd64.zip
 
 RUN pip3 install awscli
 
