@@ -13,7 +13,7 @@ RUN apk add --update \
 
 ENV GO111MODULE=on
 
-ENV TERRAFORM_VERSION=v0.12.14
+ENV TERRAFORM_VERSION=v0.12.18
 
 RUN pip3 install awscli
 
