@@ -11,22 +11,16 @@ RUN apk add --update \
         nodejs \
         npm
 
-RUN cd /bin \
-    && wget https://releases.hashicorp.com/terraform/0.12.12/terraform_0.12.12_linux_amd64.zip \
-    && unzip terraform_0.12.12_linux_amd64.zip \
-    && rm terraform_0.12.12_linux_amd64.zip
+ENV GO111MODULE=on
+
+ENV TERRAFORM_VERSION=v0.12.14
 
 RUN pip3 install awscli
 
-RUN git clone --depth=1 https://github.com/go-task/task /tmp/task \
-    && cd /tmp/task/cmd/task \
-    && go install \
-    && rm -rf /tmp/task
+RUN go get github.com/hashicorp/terraform@${TERRAFORM_VERSION}
 
-RUN git clone --depth=1 https://github.com/wata727/tflint /tmp/tflint \
-    && cd /tmp/tflint \
-    && go mod vendor \
-    && go install \
-    && rm -rf /tmp/tflint
+RUN go get github.com/go-task/task/v2/cmd/task
+
+RUN go get github.com/terraform-linters/tflint
 
 WORKDIR /root
